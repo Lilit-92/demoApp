@@ -51,7 +51,6 @@ class ToDo extends Component {
     }
 
     toggleConfirm = () => {
-        console.log(this.state, "hhhhhhh")
         this.setState({
             toggle: !this.state.toggle,
         })
