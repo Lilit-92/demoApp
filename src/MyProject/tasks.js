@@ -18,6 +18,8 @@ export default class Task extends Component{
         const {onCheck, data} = this.props
         onCheck(data._id)
     }
+   
+
 
     render(){
         const task = this.props.data
@@ -45,7 +47,7 @@ export default class Task extends Component{
                             </Button>
                             <Button href="#" 
                                 variant="success"
-                                // onClick={() => this.props.onRemove(task._id)}
+                                onClick={() => this.props.onEdit(task)}
                                 disabled={disabled}
                             >
                                 <FontAwesomeIcon icon={faEdit} />
