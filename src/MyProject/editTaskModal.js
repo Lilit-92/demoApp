@@ -12,14 +12,14 @@ export default class EditTaskModal extends Component {
 
     handleChange = (event) => {
         this.setState({
-            text: event.target.value
+            title: event.target.value
         })
        
     }
 
     handleSave = () => {
-        const {text} = this.state
-        if(!text){
+        const {title} = this.state
+        if(!title){
             return
         }
         this.props.onSave(this.state)
@@ -27,7 +27,7 @@ export default class EditTaskModal extends Component {
 
 
   render(){
-      const {text} = this.state
+      const {title} = this.state
       const {props} = this;
 
     return (
@@ -39,7 +39,7 @@ export default class EditTaskModal extends Component {
           <Modal.Body>
               <input 
               type="text"
-              value={text}
+              value={title}
               onChange={this.handleChange}
               />
           </Modal.Body>

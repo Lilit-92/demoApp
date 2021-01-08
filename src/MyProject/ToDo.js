@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
 import './ToDo.css';
 import { Row, Col, Button, Container } from 'react-bootstrap';
-import idGenerator from './idGenerator';
 import Task from './tasks';
 import AddTask from './addTasks';
 import Confirm from './removeModal';
@@ -16,6 +15,28 @@ class ToDo extends PureComponent {
        selectedTasks: new Set(),
        toggle: false,
     }
+
+    componentDidMount() {
+        fetch("http://localhost:3001/task",{
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json'
+                
+              },
+        })
+        .then((res) => res.json())
+        .then((response)=> {
+            if(response.error){
+                throw response.error
+            }
+            this.setState({
+                tasks:response.reverse(),
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
    
     handleCheck = (taskId) => {
         const selectedTasks= new Set(this.state.selectedTasks)
@@ -29,26 +50,73 @@ class ToDo extends PureComponent {
         })
     }
 
-    addTask=(value)=>{
-       
-        const newTask={
-            text: value,
-            _id: idGenerator()
-        }
-
-        const tasksArray=[newTask, ...this.state.tasks]
-
+    addTask=(data)=>{
+        
+        fetch("http://localhost:3001/task",{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                
+              },
+              body: JSON.stringify(data)
+        })
+        .then((res) => res.json())
+        .then((response)=> {
+            if(response.error){
+                throw response.error
+            }
+            const tasks = [response, ...this.state.tasks]
+            // tasks.reverse()
             this.setState({
-                tasks: tasksArray,
+                tasks
             })
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+        // this.setState({
+        //     tasks
+        // })
+        // const newTask={
+        //     text: value,
+        //     _id: idGenerator()
+        // }
+
+        // const tasksArray=[newTask, ...this.state.tasks]
+
+        //     this.setState({
+        //         tasks: tasksArray,
+        //     })
        
     }
 
     handleDelete = (taskId) =>{
-        const newTasks= this.state.tasks.filter(task => task._id !== taskId)
-        this.setState({
-            tasks: newTasks
+
+        fetch(`http://localhost:3001/task/${taskId}`,{
+            method:'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+                
+              },
+            
         })
+        .then((res) => res.json())
+        .then((response)=> {
+            if(response.error){
+                throw response.error
+            }
+            const newTasks= this.state.tasks.filter(task => task._id !== taskId)
+        
+            this.setState({
+                tasks: newTasks
+            })
+           
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+
+       
     }
 
     toggleConfirm = () => {
@@ -64,27 +132,74 @@ class ToDo extends PureComponent {
     }
 
     removeSelected = () => {
-        let tasks= [...this.state.tasks]
+        const body = {
+            tasks: [...this.state.selectedTasks],
+        }
 
-        this.state.selectedTasks.forEach((id) => {
-           tasks = tasks.filter((task) => task._id !== id)
+        fetch("http://localhost:3001/task",{
+            method:'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+                
+              },
+              body: JSON.stringify(body)
         })
-        this.setState({
-            tasks,
-            selectedTasks: new Set(),
-            toggle: false,
+        .then((res) => res.json())
+        .then((response)=> {
+            if(response.error){
+                throw response.error
+            }
+            let tasks= [...this.state.tasks]
+            this.state.selectedTasks.forEach((id) => {
+                tasks = tasks.filter((task) => task._id !== id)
+             })
+            this.setState({
+                tasks,
+                selectedTasks: new Set(),
+                toggle: false,
+            })
         })
+        .catch((error) => {
+            console.log(error)
+        })
+        
+
+       
+
        
     }
 
     saveTask = (editedTask) => {
-        const tasks = [...this.state.tasks]
-        const foundTaskIndex = tasks.findIndex((task) => task._id === editedTask._id)
-        tasks[foundTaskIndex] = editedTask
-        this.setState({
-            tasks,
-            editTask: null,
+        console.log(editedTask)
+        fetch(`http://localhost:3001/task/${editedTask._id}`,{
+            method:'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+                
+              },
+             body: JSON.stringify(editedTask) 
+            
         })
+        .then((res) => res.json())
+        .then((response)=> {
+            if(response.error){
+                throw response.error
+            }
+            const tasks = [...this.state.tasks]
+            const foundTaskIndex = tasks.findIndex((task) => task._id === editedTask._id)
+            tasks[foundTaskIndex] = response
+            this.setState({
+                tasks,
+                editTask: null,
+            })
+           
+           
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+
+       
     }
     
     

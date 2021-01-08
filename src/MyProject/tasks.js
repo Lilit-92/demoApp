@@ -11,6 +11,9 @@ export default class Task extends Component{
     state = {
         checked : false,
     }
+
+    
+
     handleCheck = () => {
         this.setState({
             checked: !this.state.checked,
@@ -36,8 +39,8 @@ export default class Task extends Component{
                                
                                 
                             ></input>
-                            <Card.Title>{task.text.slice(0,10)+'...'}</Card.Title>
-                            <Card.Text>{task.text}</Card.Text>
+                            <Card.Title>{task.title}</Card.Title>
+                            <Card.Text>{task.descriptioin}</Card.Text>
                             <Button href="#" 
                                 variant="danger"
                                 onClick={() => this.props.onRemove(task._id)}

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {InputGroup, FormControl, Button } from 'react-bootstrap';
+import {InputGroup, FormControl, Button, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+
 
 
 
@@ -8,6 +9,7 @@ export default class AddTask extends Component{
 
     state = {
         inputValue: '',
+        toggle: false,
     }
 
     handleChange=(event)=>{
@@ -20,6 +22,7 @@ export default class AddTask extends Component{
     onKeyDown=(event)=>{
         if(event.key==='Enter'){
             this.addTask()
+           
         }
     }
     addTask = () => {
@@ -27,36 +30,73 @@ export default class AddTask extends Component{
         if(!inputValue){
             return
         }
-        this.props.onAdd(inputValue)
+        const task = {
+            title:inputValue,
+        }
+        this.props.onAdd(task)
 
         this.setState({
             inputValue: '',
         });
+        this.toggleAddModal()
+    }
+
+    toggleAddModal = () => {
+        
+        this.setState({
+            toggle: !this.state.toggle,
+        });
+ 
     }
 
     render(){
-       const {inputValue} = this.state;
+       const {inputValue, toggle} = this.state;
        const {disabled} = this.props;
         
         return(
-            <InputGroup className='mb-3'>
-                <FormControl
-                    placeholder="Username"
-                    aria-label="Username"
-                    aria-describedby="basic-addon1"
-                    onChange={(event) => this.handleChange(event)}
-                    value={inputValue}
-                    onKeyDown={(event) => this.onKeyDown(event)}
-                    disabled={disabled}
-                />      
+            <>
                 <Button
                     variant="outline-primary"
-                    onClick={this.addTask}
-                    disabled={!inputValue}
+                    onClick={this.toggleAddModal}
+                    // disabled={!inputValue}
+                   
                 >
                     Add
                 </Button>
-            </InputGroup>
+            
+           {toggle &&   
+            <Modal show={true} onHide={this.toggleAddModal} animation={false}>
+                    <Modal.Header closeButton>
+                        <Modal.Title> Add task</Modal.Title>
+                    </Modal.Header>
+                        <Modal.Body>
+                            <InputGroup className='mb-3'>
+                                    <FormControl
+                                        placeholder="Username"
+                                        aria-label="Username"
+                                        aria-describedby="basic-addon1"
+                                        onChange={(event) => this.handleChange(event)}
+                                        value={inputValue}
+                                        onKeyDown={(event) => this.onKeyDown(event)}
+                                        disabled={disabled}
+                                    />      
+                                    <Button
+                                        variant="outline-primary"
+                                        onClick={this.addTask}
+                                        disabled={!inputValue}
+                                    
+                                    >
+                                        Add
+                                    </Button>
+                                    <Button variant="danger" onClick={this.toggleAddModal}>
+                                        Cancel
+                                    </Button>
+                                </InputGroup>
+                        </Modal.Body>
+                
+                </Modal>
+                }
+            </>
 
         )
     }
