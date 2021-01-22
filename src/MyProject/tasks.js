@@ -40,7 +40,7 @@ export default class Task extends Component{
                                 
                             ></input>
                             <Card.Title>{task.title}</Card.Title>
-                            <Card.Text>{task.descriptioin}</Card.Text>
+                            <Card.Text>{task.description}</Card.Text>
                             <Button href="#" 
                                 variant="danger"
                                 onClick={() => this.props.onRemove(task._id)}
