@@ -1,0 +1,12 @@
+.ToDo{
+    box-shadow: 0 0 5px grey;
+    min-height: 90vh;
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+.task {
+    border: 1px solid red;
+}
