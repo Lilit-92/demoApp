@@ -67,7 +67,6 @@ class ToDo extends PureComponent {
                 throw response.error
             }
             const tasks = [response, ...this.state.tasks]
-            // tasks.reverse()
             this.setState({
                 tasks,
                 openNewTaskModal: false,
@@ -217,7 +216,7 @@ class ToDo extends PureComponent {
         const { toggle , selectedTasks, editTask, openNewTaskModal } =this.state
         const tasksArray=this.state.tasks.map((task,i)=>{
             return(
-                <Col key={task._id} xs='12' sm='6' md='4' lg='3' xl='2' className='m-2 p-2'>
+                <Col key={task._id} xs='12' sm='6' md='4' lg='4' xl='3' className='m-2 p-2'>
                     <Task 
                         data={task}
                         onRemove={this.handleDelete}
