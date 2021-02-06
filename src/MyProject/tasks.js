@@ -5,6 +5,8 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import {Button,Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import {formatDate} from "./utils";
+import { Link } from "react-router-dom"
+
 
 
 
@@ -38,9 +40,15 @@ export default class Task extends Component{
                                 type='checkbox'
                                 onClick={this.handleCheck}    
                             ></input>
-                            <Card.Title>{task.title}</Card.Title>
+                            <Card.Title>
+                                <Link 
+                                    to={`/task/${task._id}`}>
+                                        {task.title}
+                                
+                                </Link>
+                            </Card.Title>
                             <Card.Text>
-                                {task.description}
+                                Description: {task.description}
                             </Card.Text>
                             <Card.Text>
                                 Date: {formatDate(task.date)}

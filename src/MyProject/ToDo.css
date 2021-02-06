@@ -1,9 +1,10 @@
 .ToDo{
-    box-shadow: 0 0 5px grey;
+    /* box-shadow: 0 0 5px grey; */
+    border: 0.1px solid rgba(206, 205, 205,0.5);
     min-height: 90vh;
-    width: 90%;
-    margin: 0 auto;
-    padding: 20px;
+    /* width: 90%; */
+    /* margin: 0 auto; */
+    /* padding: 20px; */
 }
 
 

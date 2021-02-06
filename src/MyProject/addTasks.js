@@ -49,7 +49,7 @@ export default class AddTask extends Component{
     }
 
     render(){
-       const {title, toggle, date} = this.state;
+       const {title, date} = this.state;
        const {disabled, onClose} = this.props;
         
         return(

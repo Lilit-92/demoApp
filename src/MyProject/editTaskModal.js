@@ -90,28 +90,6 @@ export default class EditTaskModal extends Component {
               </Modal.Footer>
       
       </Modal>
-    
-        // <Modal show={true} onHide={props.onClose} animation={false}>
-        //   <Modal.Header closeButton>
-        //     <Modal.Title> Edit task</Modal.Title>
-        //   </Modal.Header>
-        //   <Modal.Body>
-        //       <input 
-        //       type="text"
-        //       value={title}
-        //       onChange={this.handleChange}
-        //       />
-        //   </Modal.Body>
-        //   <Modal.Footer>
-        //     <Button variant="primary" onClick={this.handleSave}>
-        //       Save
-        //     </Button>
-        //     <Button variant="danger" onClick={props.onClose}>
-        //       Cancel
-        //     </Button>
-        //   </Modal.Footer>
-        // </Modal>
-  
     );
   }
 }

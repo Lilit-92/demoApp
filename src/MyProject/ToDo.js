@@ -233,7 +233,7 @@ class ToDo extends PureComponent {
         
         return(
             <div>
-                <Container className="ToDo">
+                <Container className="ToDo pt-4 pb-4 mt-2 mb-2">
                     <Container>
                     
                     <Row className='justify-content-center mb-3'>
@@ -245,10 +245,7 @@ class ToDo extends PureComponent {
                             >
                                 Add new task
                             </Button>
-                            {/* <AddTask 
-                                onAdd={this.addTask}
-                                disabled = {!!this.state.selectedTasks.size}
-                            /> */}
+                           
                         </Col>
                     </Row>
                     </Container>
