@@ -7,17 +7,41 @@ import SingleTask from "./MyProject/SingleTask";
 import NotFound from "./MyProject/NotFound";
 import NavMenu from "./MyProject/NavMenu";
 
-function App() {
+const  App = () => {
+  const routes = [
+    {
+      path:"/",
+      component:ToDo,
+    },
+    {
+      path:"/about",
+      component:About,
+    },
+    {
+      path:"/contact",
+      component:ContactUs,
+    },
+    {
+      path:"/task/:id",
+      component:SingleTask,
+    },
+    {
+      path:"/404",
+      component:NotFound,
+    },
+  ]
   return (
     <>
     <NavMenu />
     <Router>
       <Switch>
-        <Route path='/' component={ToDo} exact />
-        <Route path='/about' component={About} exact />
-        <Route path='/contact' component={ContactUs} exact />
-        <Route path='/task/:id' component={SingleTask} exact />
-        <Route path='/404' component={NotFound} exact />
+        {
+          routes.map((route, index) => {
+            return(
+              <Route path={route.path} component={route.component} exact key={index}/>
+            )
+          })
+        }
         <Redirect to="404" />
       </Switch>
 
