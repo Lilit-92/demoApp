@@ -6,12 +6,12 @@ import {Button,Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import {formatDate} from "./utils";
 import { Link } from "react-router-dom"
+import {connect} from "react-redux"
+import { removeTask } from "./action"
 
 
 
-
-
-export default class Task extends Component{
+class Task extends Component{
     state = {
         checked : false,
     }
@@ -58,7 +58,7 @@ export default class Task extends Component{
                             </Card.Text>
                             <Button href="#" 
                                 variant="danger"
-                                onClick={() => this.props.onRemove(task._id)}
+                                onClick={() => this.props.removeTask(task._id)}
                                 disabled={disabled}
                             >
                                 <FontAwesomeIcon icon={faTrash} />
@@ -78,10 +78,15 @@ export default class Task extends Component{
         )
     }
 }
+const mapDispatchToProps = {
+    removeTask
+}
+
+
+export default connect(null, mapDispatchToProps)(Task)
 
 Task.propTypes = {
     data: PropTypes.object.isRequired,
-    onRemove: PropTypes.func.isRequired,
     onCheck: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
 };

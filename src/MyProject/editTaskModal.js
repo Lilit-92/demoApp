@@ -1,11 +1,13 @@
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import { Button, Modal, Form, FormControl} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {formatDate} from "./utils";
+import { connect } from "react-redux";
+import  {editTask} from "./action"
 
-export default class EditTaskModal extends Component {
+ class EditTaskModal extends Component {
     constructor (props) {
         super(props);
         const {date} = props.data
@@ -13,6 +15,10 @@ export default class EditTaskModal extends Component {
             ...props.data,
             date: date ? new Date(date) : new Date()
         }
+        this.titleRef = createRef(null)
+    }
+    componentDidMount(){
+      this.titleRef.current.focus()
     }
 
     handleChange = (event) => {
@@ -28,7 +34,11 @@ export default class EditTaskModal extends Component {
         if(!title){
             return
         }
-        this.props.onSave({...this.state, date: formatDate(date.toISOString())})
+        const editedTask = {
+          ...this.state,
+          date:  formatDate(date.toISOString())
+        }
+        this.props.editTask(editedTask, this.props.from)
     }
 
     handleDateChange = (date) => {
@@ -58,8 +68,7 @@ export default class EditTaskModal extends Component {
                               aria-label="Username"
                               aria-describedby="basic-addon1"
                               onChange={this.handleChange}
-                              // onKeyDown={(event) => this.onKeyDown(event)}
-                              // disabled={disabled}
+                              ref= {this.titleRef}
                           />      
                           <Form.Group controlId="exampleForm.ControlTextarea1">
                               <Form.Control as="textarea" rows={3} 
@@ -94,9 +103,14 @@ export default class EditTaskModal extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  editTask
+}
+
+export default connect(null, mapDispatchToProps )(EditTaskModal)
+
 EditTaskModal.ptopTypes = {
     data: PropTypes.object.isRequired,
-    onSave: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
 };
 

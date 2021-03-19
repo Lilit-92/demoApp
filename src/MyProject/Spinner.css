@@ -16,6 +16,8 @@
   }
 
   .spinerContainer{
+    opacity: 0.8;
+    background-color: #fff;
     height: 100vh;
     width: 100vw;
     position: absolute;

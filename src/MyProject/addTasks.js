@@ -1,20 +1,27 @@
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import { FormControl, Button, Modal, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {formatDate} from "./utils";
+import { connect } from "react-redux";
+import { addTask } from "./action"
 
 
-
-export default class AddTask extends Component{
-
-    state = {
-        title: "",
-        description: "",
-        date: new Date(),
-        
+ class AddTask extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            title: "",
+            description: "",
+            date: new Date(),
+            
+        }
+        this.titleRef = createRef(null)
     }
+   componentDidMount(){
+       this.titleRef.current.focus()
+   }
 
     handleChange=(event, type)=>{
         this.setState({
@@ -29,6 +36,8 @@ export default class AddTask extends Component{
            
         }
     }
+
+
     addTask = () => {
         const {title, description, date} = this.state
         if(!title){
@@ -39,9 +48,12 @@ export default class AddTask extends Component{
             description,
             date: formatDate(date.toISOString()),
         }
-        this.props.onAdd(task)
+      
+        this.props.addTask(task)
 
     }
+
+
     handleDateChange = (date) => {
         this.setState({
             date
@@ -65,6 +77,7 @@ export default class AddTask extends Component{
                                         onChange={(event) => this.handleChange(event, "title")}
                                         onKeyDown={(event) => this.onKeyDown(event)}
                                         disabled={disabled}
+                                        ref={this.titleRef}
                                     />      
                                     <Form.Group controlId="exampleForm.ControlTextarea1">
                                         <Form.Control as="textarea" rows={3} 
@@ -95,9 +108,15 @@ export default class AddTask extends Component{
     }
 }
 
+const mapDispatchToProps = {
+     addTask
+}
+
+export default connect(null , mapDispatchToProps)(AddTask);
+
 AddTask.propTypes = {
     disabled: PropTypes.bool.isRequired,
     onClose:PropTypes.func.isRequired,
-    onAdd: PropTypes.func.isRequired,
+    // onAdd: PropTypes.func.isRequired,
     
 }

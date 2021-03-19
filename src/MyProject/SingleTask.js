@@ -2,63 +2,56 @@ import React , { PureComponent } from "react";
 import {Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
-import Spinner from "./Spinner";
+// import Spinner from "./Spinner";
 import {formatDate} from "./utils";
 import EditTaskModal from "./editTaskModal";
+import {connect} from "react-redux";
+import {getSingleTask, removeSingleTask, removeTask} from "./action"
 
 
-export default class SingleTask extends PureComponent{
+class SingleTask extends PureComponent{
     state= {
-        task: null,
         openEditModal: false
     }
 
     componentDidMount () {
         const taskId= this.props.match.params.id
-        fetch(`http://localhost:3001/task/${taskId}`,{
-            method:'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-                
-              },
-            
-        })
-        .then((res) => res.json())
-        .then((response)=> {
-            if(response.error){
-                throw response.error
-            }
-            this.setState({
-                task: response
-            })
-           
-           
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        this.props.getSingleTask(taskId)
     }
 
+    componentDidUpdate(prevProps) {
+        if(!prevProps.editTaskSuccess && this.props.editTaskSuccess){
+            this.setState({
+                openEditModal: false
+    
+               })
+        }
+    }
+   
+
     onRemove = () => {
-        const taskId= this.state.task._id
-        fetch(`http://localhost:3001/task/${taskId}`,{
-            method:'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
+        const taskId= this.props.match.params.id
+        this.props.removeSingleTask(taskId)
+        // this.props.history.push("/")
+
+        // fetch(`http://localhost:3001/task/${taskId}`,{
+        //     method:'DELETE',
+        //     headers: {
+        //         'Content-Type': 'application/json'
                 
-              },
+        //       },
             
-        })
-        .then((res) => res.json())
-        .then((response)=> {
-            if(response.error){
-                throw response.error
-            }
-           this.props.history.push("/")
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        // })
+        // .then((res) => res.json())
+        // .then((response)=> {
+        //     if(response.error){
+        //         throw response.error
+        //     }
+        //    this.props.history.push("/")
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // })
     }
 
     taggleEditModal = () => {
@@ -68,41 +61,16 @@ export default class SingleTask extends PureComponent{
     }
 
     saveTask = (data) => {
-        const taskId=this.state.task._id
-        fetch(`http://localhost:3001/task/${taskId}`,{
-            method:'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-                
-              },
-             body: JSON.stringify(data) 
-            
-        })
-        .then((res) => res.json())
-        .then((response)=> {
-            if(response.error){
-                throw response.error
-            }
-           
-            this.setState({
-                task:response,
-                openEditModal: false
-            })
-           
-           
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-
        
     } 
 
 
     render(){
-        const {task, openEditModal} = this.state
+        const { openEditModal} = this.state
+        const { task } = this.props
         return(
-            <div>
+            <>
+            
                {!!task ?
 
                         <Card>
@@ -137,16 +105,33 @@ export default class SingleTask extends PureComponent{
                                 </div>
                         </Card>
                      :
-                     <Spinner />
+                     <p>Theres no task to show!!</p>
                }
                { openEditModal &&
                   <EditTaskModal
+                    from="single"
                     data={task}
-                    onSave={this.saveTask}
                     onClose={this.taggleEditModal}
                   />  
                }
-            </div>
+            </>
         )
     }
 }
+
+
+
+const mapStateToProps = (state) => {
+    return {
+        task: state.tasks,
+        editTaskSuccess: state.editTaskSuccess
+    }
+}
+
+const mapDispatchToProps = {
+    getSingleTask,
+    removeSingleTask,
+    removeTask
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleTask);
