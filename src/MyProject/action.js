@@ -1,12 +1,21 @@
 import request from "./request";
 // import * as actionTypes from "./actionTypes";
 
-export function getTasks() {
+export function getTasks(data={}) {
+    let url = "http://localhost:3001/task"
+    let query = "?"
+    for(let key in data){
+        let value = data[key]
+        query = `${query}${key}=${value}&`
+    }
+    url =  url+query
+
+    console.log(data)
     return (dispatch) => {
 
         dispatch({type: "LOADING"})
 
-        request('http://localhost:3001/task')
+        request(url)
         .then(res => {
             dispatch({type: "GET_TASKS_SUCCESS", tasks:res})
         })
@@ -21,7 +30,6 @@ export function getTasks() {
 
 export function addTask(data) {
     return (dispatch) => {
-
         dispatch({type:"LOADING"})
         request('http://localhost:3001/task',"POST",data)
         .then(res => {
@@ -116,7 +124,7 @@ export function removeSingleTask(taskId) {
 
         request(`http://localhost:3001/task/${taskId}`, "DELETE" )
         .then(res => {
-            dispatch({type:"REMOVE_SINGLE_TASK_SUCCESS", taskId})
+            dispatch({type:"REMOVE_SINGLE_TASK_SUCCESS", task: res})
             
         })
         .catch((error) => {

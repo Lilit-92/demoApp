@@ -6,7 +6,7 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import {formatDate} from "./utils";
 import EditTaskModal from "./editTaskModal";
 import {connect} from "react-redux";
-import {getSingleTask, removeSingleTask, removeTask} from "./action"
+import {getSingleTask, removeSingleTask } from "./action"
 
 
 class SingleTask extends PureComponent{
@@ -17,6 +17,7 @@ class SingleTask extends PureComponent{
     componentDidMount () {
         const taskId= this.props.match.params.id
         this.props.getSingleTask(taskId)
+        
     }
 
     componentDidUpdate(prevProps) {
@@ -26,32 +27,15 @@ class SingleTask extends PureComponent{
     
                })
         }
+       
     }
-   
-
+  
     onRemove = () => {
         const taskId= this.props.match.params.id
         this.props.removeSingleTask(taskId)
-        // this.props.history.push("/")
-
-        // fetch(`http://localhost:3001/task/${taskId}`,{
-        //     method:'DELETE',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-                
-        //       },
-            
-        // })
-        // .then((res) => res.json())
-        // .then((response)=> {
-        //     if(response.error){
-        //         throw response.error
-        //     }
-        //    this.props.history.push("/")
-        // })
-        // .catch((error) => {
-        //     console.log(error)
-        // })
+        this.props.history.push("/")
+        window.location.reload()
+       
     }
 
     taggleEditModal = () => {
@@ -60,20 +44,17 @@ class SingleTask extends PureComponent{
         })
     }
 
-    saveTask = (data) => {
-       
-    } 
-
 
     render(){
         const { openEditModal} = this.state
         const { task } = this.props
-        return(
+        return (
             <>
-            
-               {!!task ?
+            {console.log(task, "taskkkkkkkkkkkkk")}
+            {console.log(!!task, "taskkkkkkkkkkkkk")}
+               { !task.success ?
 
-                        <Card>
+                        <Card className="single-card">
                                 <div> 
                                         <Card.Body>
                                             <Card.Title>
@@ -105,7 +86,7 @@ class SingleTask extends PureComponent{
                                 </div>
                         </Card>
                      :
-                     <p>Theres no task to show!!</p>
+                     <h1 style={{textAlign:"center",color:"grey"}}>Theres no task to show!!</h1>
                }
                { openEditModal &&
                   <EditTaskModal
@@ -131,7 +112,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     getSingleTask,
     removeSingleTask,
-    removeTask
+   
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleTask);

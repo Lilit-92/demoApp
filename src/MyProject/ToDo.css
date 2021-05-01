@@ -1,13 +1,89 @@
-.ToDo{
-    /* box-shadow: 0 0 5px grey; */
-    border: 0.1px solid rgba(206, 205, 205,0.5);
-    min-height: 90vh;
-    /* width: 90%; */
-    /* margin: 0 auto; */
-    /* padding: 20px; */
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Lucida Sans', sans-serif;
 }
-
+.ToDo{
+    box-shadow: 0 0 2px rgb(163, 163, 163);
+    min-height: 100vh;
+    background-color: rgba(223, 222, 222, 0.3);
+  
+}
+.parent{
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(../Images/fon2.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+ 
+  }
 
 .task {
-    border: 1px solid red;
+
+    background-color:  rgba(151, 149, 149, 0.1);
+}
+.card{
+    box-shadow: 0 0 2px rgb(250, 250, 250);
+    background-color: rgb(245, 245, 245);
+}
+.card:hover{
+    box-shadow: 0 0 8px rgb(155, 155, 155);
+    cursor: pointer;
+}
+.card:hover .card-text-hover{
+    color: #014ea0;
+    text-decoration: none;
+}
+footer{
+    background-color:#993333;
+    width: 100%;
+    height: 56px;
+    box-shadow: 0 0 5px rgb(39, 39, 39);
+   
+}
+.contact_us{
+    width: 50%;
+    height: 450px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 30px;
+     /* background-color: rgba(43, 42, 42, 0.3);  */
+     background-color: rgba(209, 209, 209, 0.3);
+}
+.about-us{
+    width: 50%;
+    min-height: 450px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: rgba(245, 245, 245, 0.5);
+    color: black;
+}
+.about-us>h1{
+    color: #575757;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+.text{
+    color: #575757;
+    font-weight: bold;
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+.single-card{
+    width: 50%;
+    min-height: 450px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: rgba(245, 245, 245, 0.5);
+    color: black;
+    text-align: center;
+}
+
+.error{margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    height: 100vh;
+    background-image: url(../Images/404err.png);
 }

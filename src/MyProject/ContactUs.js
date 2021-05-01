@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import {Form, Button} from "react-bootstrap"
 
 const fefaultValues = {
     name:'',
@@ -26,38 +26,56 @@ export default function ContactUs (){
     }
 
     return(
-       <div>
-            <div>Contact Us</div>
-            <input 
-                type="text" 
-                name="name" 
-                placeholder="Your name" 
-                value={values.name} 
-                onChange={handleChange} 
-            /><br />
-            <input 
-                type="email" 
-                name="email" 
-                placeholder="Your email" 
-                value={values.email} 
-                onChange={handleChange} 
-            /><br />
-            <input 
-                type="phone" 
-                name="phone" 
-                placeholder="Your phone" 
-                value={values.phone} 
-                onChange={handleChange} 
-                /><br />
-            <textarea 
-                name="message" 
-                placeholder="message..." 
-                value={values.message} 
-                onChange={handleChange} 
-            /><br />
-            <button
-            onClick={send}
-            >Send</button>
+       <div className="contact_us">
+                    <Form>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Label className="text">Contact Us</Form.Label>
+                            <Form.Control 
+                            type="text" 
+                            placeholder="Enter your name" 
+                            name="name" 
+                            value={values.name} 
+                            onChange={handleChange} />
+                          
+                        </Form.Group>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Control 
+                            type="email" 
+                            placeholder="Enter your email" 
+                            name="email" 
+                            value={values.email} 
+                            onChange={handleChange} />
+                           
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Control 
+                            type="phone" 
+                            name="phone" 
+                            placeholder="Enter your phone" 
+                            value={values.phone} 
+                            onChange={handleChange} 
+                             />
+                        </Form.Group>
+                       
+                        <Form.Group controlId="exampleForm.ControlTextarea1">
+                            <Form.Control 
+                            as="textarea" 
+                            rows={3} 
+                            name="message" 
+                            placeholder="message..." 
+                            value={values.message} 
+                            onChange={handleChange} 
+                            />
+                        </Form.Group>
+                        <Button 
+                         onClick={send}
+                        variant="danger" 
+                        type="submit">
+                            Send
+                        </Button>
+                    </Form>
+
        </div>
     )
 }

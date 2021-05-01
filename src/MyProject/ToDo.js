@@ -17,12 +17,14 @@ class ToDo extends PureComponent {
        selectedTasks: new Set(),
        toggle: false,
        openNewTaskModal: false,
+       searchToggle:false,
     }
 
     componentDidMount() {
         this.props.getTasks()
 
     }
+   
 
     componentDidUpdate(prevProps) {
         if(!prevProps.addTaskSuccess && this.props.addTaskSuccess){
@@ -74,15 +76,15 @@ class ToDo extends PureComponent {
        
     }
 
-    saveTask = (editedTask) => {
-
-
-       
-    } 
-
     toggleNewTaskModal = () => {
         this.setState({
             openNewTaskModal: !this.state.openNewTaskModal,
+        })
+    }
+
+    showSearch = () => {
+        this.setState({
+            searchToggle: !this.state.searchToggle,
         })
     }
     
@@ -90,7 +92,8 @@ class ToDo extends PureComponent {
   
 
     render(){
-        const { toggle , selectedTasks, editTask, openNewTaskModal } =this.state
+        const { toggle , selectedTasks, editTask, openNewTaskModal, searchToggle } =this.state
+        
         const tasksArray=this.props.tasks.map((task,i)=>{
             return(
                 <Col key={task._id} xs='12' sm='6' md='4' lg='4' xl='3' className='m-2 p-2'>
@@ -109,10 +112,19 @@ class ToDo extends PureComponent {
         
         return(
             <>
-                <Container className="ToDo pt-4 pb-4 mt-2 mb-2">
+                <Container className="ToDo pt-4 pb-4 ">
                     <Container>
-                    <Search />
-                    <Row className='justify-content-center mb-3'>
+                        {searchToggle && 
+                            <Search />
+                        }
+                   
+                    <Row className="justify-content-end m-2">
+                        <Button 
+                        onClick={this.showSearch}
+                        variant="outline-success"
+                         >Filter</Button>
+                        </Row>
+                    <Row className='justify-content-center mb-3 mt-4'>
                         <Col md={8} xl={2} lg={3} sm={6} >
                             <Button
                                 variant="outline-primary"
@@ -128,7 +140,7 @@ class ToDo extends PureComponent {
                     <Row className="justify-content-center">
                         {tasksArray}
                     </Row>
-                    <Row>
+                    <Row className="justify-content-end" >
                         <Col xs={4}>
                             <Button 
                                 variant="danger"
@@ -140,6 +152,7 @@ class ToDo extends PureComponent {
                         </Col>
                     </Row>
                 </Container>
+               
                     {toggle &&
                         <Confirm 
                             onSubmit = {this.removeSelected}
@@ -163,6 +176,7 @@ class ToDo extends PureComponent {
                          />
 
                      }
+
             </>
         )
     }
@@ -178,8 +192,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-        getTasks: getTasks,
-        removeSelectedTask
+        getTasks,
+        removeSelectedTask,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo);

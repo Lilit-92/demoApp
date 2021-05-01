@@ -1,6 +1,6 @@
 import React from "react";
 import ToDo from './MyProject/ToDo';
-import {BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import About from "./MyProject/About";
@@ -44,7 +44,8 @@ const  App = (props) => {
   }
   
   return (
-    <div>
+    <>
+    <div className="parent">
      { loading && <Spiner />
 
 }
@@ -73,6 +74,9 @@ const  App = (props) => {
 
        
   </div>
+  <footer >
+  </footer>
+  </>
      
   );
 }

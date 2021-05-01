@@ -1,6 +1,5 @@
 import React,{ Component }  from "react";
 import {Container, Nav, Navbar} from "react-bootstrap"
-import {BrowserRouter as Router } from "react-router-dom"
 import { NavLink } from "react-router-dom"
 
 
@@ -9,7 +8,7 @@ export default class NavMenu extends Component{
     render(){
         return(
            
-            <header className="bg-dark" >
+            <header className="header" style={{backgroundColor:"#993333"}}>
                 <Container>
                     <Navbar expand="md" variant="dark"> 
                         <Navbar.Brand href="/">Tasks</Navbar.Brand>

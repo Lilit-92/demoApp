@@ -107,7 +107,7 @@ export const reducer = (state = defaultState, action) => {
   }
 
   case "REMOVE_SINGLE_TASK_SUCCESS": {
-   
+    
       return{
         ...state,
         tasks: action.task,

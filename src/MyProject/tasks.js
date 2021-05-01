@@ -34,6 +34,7 @@ class Task extends Component{
         return(
             <>
             <Card>
+                
               <div className={checked ? "task" : ""}> 
                         <Card.Body>
                             <input 
@@ -41,7 +42,7 @@ class Task extends Component{
                                 onClick={this.handleCheck}    
                             ></input>
                             <Card.Title>
-                                <Link 
+                                <Link className="card-text-hover"
                                     to={`/task/${task._id}`}>
                                         {task.title}
                                 
